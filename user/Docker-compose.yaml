@@ -1,0 +1,31 @@
+﻿version: '3.7'
+
+# Services include: NestJS from NestJs.Dockerfile and mongodb from MongoDb.Dockerfile, NestJs run depends on MongoDB
+services:
+  nestjs:
+    build:
+      context: .
+      dockerfile: ./NestJs.Dockerfile
+    environment:
+      - APP_ENV=${APP_ENV}
+    depends_on:
+      - mongodb
+    ports:
+      - "3001:3001"
+    networks:
+      - nestjs-network
+
+  mongodb:
+    container_name: mongodb_test
+    build:
+      context: .
+      dockerfile: ./MongoDb.Dockerfile
+    ports:
+      - "27017:27017"
+    networks:
+      - nestjs-network
+
+networks:
+  nestjs-network:
+    driver: bridge
+        
