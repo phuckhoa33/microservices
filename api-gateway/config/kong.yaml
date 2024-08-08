@@ -1,10 +1,21 @@
-# a very minimal declarative config file
 _format_version: "2.1"
 _transform: true
 services:
-  - name: user-server # name of service 2
-    url: http://172.0.0.1:3001
+  - name: auth-service
+    url: http://auth:8801
+    routes:
+      - name: auth
+        paths:
+          - /auth
+  - name: user-service
+    url: http://user:8802
     routes:
       - name: users
         paths:
           - /users
+  - name: transaction-service
+    url: http://transaction:8803
+    routes:
+      - name: transactions
+        paths:
+          - /transactions

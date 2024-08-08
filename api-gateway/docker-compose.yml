@@ -127,6 +127,36 @@ services:
     volumes:
       - kong_data:/var/lib/postgresql/data
 
+  auth:
+    build:
+      context: ../auth
+      dockerfile: NestJS.Development.Dockerfile
+    networks:
+      - kong-net
+    environment:
+      - NODE_ENV=development
+    restart: on-failure
+
+  user:
+    build:
+      context: ../user
+      dockerfile: NestJS.Development.Dockerfile
+    networks:
+      - kong-net
+    environment:
+      - NODE_ENV=development
+    restart: on-failure
+
+  transaction:
+    build:
+      context: ../transaction
+      dockerfile: NestJS.Development.Dockerfile
+    networks:
+      - kong-net
+    environment:
+      - NODE_ENV=development
+    restart: on-failure
+
 secrets:
   kong_postgres_password:
     file: ./POSTGRES_PASSWORD
